@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Picker</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: pink;
+            font-family: Arial, sans-serif;
+        }
+        .circle {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            border-radius: 50%;
+            background-color: lightcoral;
+            color: white;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 24px;
+        }
+        .result, .warning {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        .options div {
+            display: none;
+            margin-top: 10px;
+            font-size: 20px;
+            background-color: lightgrey;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .disabled {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>GiveAwayy By Mbhiww!!</h1>
+    <h1>Pilih salah satu dari bawah ini!!</h1>
+    <div class="circle" onclick="handleClick()">A</div>
+    <div class="circle" onclick="handleClick()">B</div>
+    <div class="circle" onclick="handleClick()">C</div>
+    <div class="circle" onclick="handleClick()">D</div>
+    <div class="circle" onclick="handleClick()">E</div>
+    <div class="circle" onclick="handleClick()">F</div>
+    <div class="result" id="result">Yang Kamu Dapat:</div>
+    <div class="warning" id="warning"></div>
+    <div class="options" id="options">
+        <div data-choice="#">Horizon Essence</div>
+        <div data-choice="#">5 Skill BOx</div>
+        <div data-choice="#">World Tiket</div>
+        <div data-choice="#">10 Hogfreg</div>
+        <div data-choice="#">Hollow Essence</div>
+        <div data-choice="#">Comcom(Aizenhh!)</div>
+        <div data-choice="A">Zonk</div>
+        <div data-choice="A">Silahkan Coba Lagi Lain Waktu!</div>
+        <div data-choice="B">Zonk</div>
+        <div data-choice="B">Silahkan Coba Lagi Lain Waktu!</div>
+        <div data-choice="C">Zonk</div>
+        <div data-choice="C">Silahkan Coba Lagi Lain Waktu!</div>
+        <div data-choice="D">ComCom(Aizenhh!)</div>
+        <div data-choice="E">Zonk</div>
+        <div data-choice="E">Silahkan Coba Lagi Lain Waktu!</div>
+        <div data-choice="F">Zonk</div>
+        <div data-choice="F">Silahkan Coba Lagi Lain Waktu!</div>
+        <div data-choice="G">Zonk</div>
+        <div data-choice="G">Silahkan Coba Lagi Lain Waktu!</div>
+    </div>
+    <script>
+        let hasClicked = false;
+        function handleClick() {
+            if (!hasClicked) {
+                hasClicked = true;
+                showResult();
+                disableAllButtons();
+            } else {
+                showWarning();
+            }
+        }
+
+        function showResult() {
+            const choices = ['A', 'B', 'C', 'D', 'E', 'F'];
+            const randomChoice = choices[Math.floor(Math.random() * choices.length)];
+            const resultElement = document.getElementById('result');
+            resultElement.innerText = 'Yang Kamu Dapat:';
+
+            const options = document.querySelectorAll('#options div');
+            options.forEach(option => {
+                if (option.getAttribute('data-choice') === randomChoice) {
+                    option.style.display = 'block';
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+        }
+
+        function disableAllButtons() {
+            const buttons = document.querySelectorAll('.circle');
+            buttons.forEach(button => {
+                button.classList.add('disabled');
+            });
+        }
+
+        function showWarning() {
+            const warning = document.getElementById('warning');
+            warning.innerText = 'Nah Cuman Bisa pilih 1 :P';
+        }
+    </script>
+</body>
+</html>
