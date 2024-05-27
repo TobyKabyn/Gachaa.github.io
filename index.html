@@ -44,56 +44,55 @@
 
     <h1>GiveAwayy By Mbhiww!!</h1>
     <h1>Pilih salah satu dari bawah ini!!</h1>
-    <div class="circle" onclick="handleClick()">A</div>
-    <div class="circle" onclick="handleClick()">B</div>
-    <div class="circle" onclick="handleClick()">C</div>
-    <div class="circle" onclick="handleClick()">D</div>
-    <div class="circle" onclick="handleClick()">E</div>
-    <div class="circle" onclick="handleClick()">F</div>
+    <div class="circle" onclick="handleClick('A')">A</div>
+    <div class="circle" onclick="handleClick('B')">B</div>
+    <div class="circle" onclick="handleClick('C')">C</div>
+    <div class="circle" onclick="handleClick('D')">D</div>
+    <div class="circle" onclick="handleClick('E')">E</div>
+    <div class="circle" onclick="handleClick('F')">F</div>
     <div class="result" id="result">Yang Kamu Dapat:</div>
     <div class="warning" id="warning"></div>
     <div class="options" id="options">
-        <div data-choice="#">Horizon Essence</div>
-        <div data-choice="#">5 Skill BOx</div>
-        <div data-choice="#">World Tiket</div>
-        <div data-choice="#">10 Hogfreg</div>
-        <div data-choice="#">Hollow Essence</div>
-        <div data-choice="#">Comcom(Aizenhh!)</div>
+        <div data-choice="1">Horizon Essence</div>
+        <div data-choice="2">5 Skill BOx</div>
+        <div data-choice="3">World Tiket</div>
+        <div data-choice="4">10 Hogfreg</div>
+        <div data-choice="5">Hollow Essence</div>
+        <div data-choice="6">Comcom(Aizenhh!)</div>
         <div data-choice="A">Zonk</div>
         <div data-choice="A">Silahkan Coba Lagi Lain Waktu!</div>
-        <div data-choice="B">Zonk</div>
-        <div data-choice="B">Silahkan Coba Lagi Lain Waktu!</div>
+        <div data-choice="B">Skill box</div>
+        <div data-choice="B">Congrats!</div>
         <div data-choice="C">Zonk</div>
         <div data-choice="C">Silahkan Coba Lagi Lain Waktu!</div>
-        <div data-choice="D">ComCom(Aizenhh!)</div>
+        <div data-choice="D">Hog Fregment</div>
+        <div data-choice="D">Congrats!</div>
         <div data-choice="E">Zonk</div>
         <div data-choice="E">Silahkan Coba Lagi Lain Waktu!</div>
-        <div data-choice="F">Zonk</div>
-        <div data-choice="F">Silahkan Coba Lagi Lain Waktu!</div>
+        <div data-choice="F">Congrats!</div>
+        <div data-choice="F">Hollow Essence!</div>
         <div data-choice="G">Zonk</div>
         <div data-choice="G">Silahkan Coba Lagi Lain Waktu!</div>
     </div>
     <script>
-        let hasClicked = false;
-        function handleClick() {
-            if (!hasClicked) {
-                hasClicked = true;
-                showResult();
+        function handleClick(choice) {
+            if (!localStorage.getItem('hasSelected')) {
+                localStorage.setItem('hasSelected', true);
+                localStorage.setItem('selectedChoice', choice);
+                showResult(choice);
                 disableAllButtons();
             } else {
                 showWarning();
             }
         }
 
-        function showResult() {
-            const choices = ['A', 'B', 'C', 'D', 'E', 'F'];
-            const randomChoice = choices[Math.floor(Math.random() * choices.length)];
+        function showResult(choice) {
             const resultElement = document.getElementById('result');
             resultElement.innerText = 'Yang Kamu Dapat:';
 
             const options = document.querySelectorAll('#options div');
             options.forEach(option => {
-                if (option.getAttribute('data-choice') === randomChoice) {
+                if (option.getAttribute('data-choice') === choice) {
                     option.style.display = 'block';
                 } else {
                     option.style.display = 'none';
@@ -112,6 +111,19 @@
             const warning = document.getElementById('warning');
             warning.innerText = 'Nah Cuman Bisa pilih 1 :P';
         }
+
+        // Fungsi untuk memeriksa apakah pengguna sudah memilih sebelumnya saat memuat halaman
+        function checkPreviousSelection() {
+            const hasSelected = localStorage.getItem('hasSelected');
+            if (hasSelected) {
+                disableAllButtons();
+                const selectedChoice = localStorage.getItem('selectedChoice');
+                showResult(selectedChoice);
+            }
+        }
+
+        // Panggil fungsi checkPreviousSelection saat memuat halaman
+        checkPreviousSelection();
     </script>
 </body>
 </html>
